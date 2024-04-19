@@ -2,7 +2,7 @@
 
 set -eE
 
-SCRIPT_DATE="[2024-01-28]"
+SCRIPT_DATE="[2024-03-11]"
 
 COLOR_RESET="\033[0m"
 COLOR_BLACK_B="\033[1;30m"
@@ -98,23 +98,16 @@ enable_usb_boot() {
 }
 
 reset_gbb_flags() {
-	echo "Resetting GBB flags... This will only work if WP is disabled"
-	/usr/share/vboot/bin/set_gbb_flags.sh 0x0
+	echo "What do you want your GBB flags to be set to?"
+ 	echo "0x80b1 is reomended"
+	read flags
+ 	wp_disable
+ 	/usr/share/vboot/bin/set_gbb_flags.sh $flags
 }
 
 wp_disable() {
-	while :; do
-		if flashrom --wp-disable; then
-			echo -e "${COLOR_GREEN_B}Success. Note that some devices may need to reboot before the chip is fully writable.${COLOR_RESET}"
-			return 0
-		fi
-		echo -e "${COLOR_RED_B}Press SHIFT+Q to cancel.${COLOR_RESET}"
-		if [ "$(poll_key)" = "Q" ]; then
-			printf "\nCanceled\n"
-			return 1
-		fi
-		sleep 1
-	done
+echo "You need to have done a temp way of disable wp first before using this..."
+flashrom --wp-disable
 }
 
 touch_developer_mode() {
@@ -157,6 +150,10 @@ disable_verity() {
 		*) return ;;
 	esac
 	/usr/share/vboot/bin/make_dev_ssd.sh -i "$cros_dev" --remove_rootfs_verification
+}
+
+kvs(){
+	/usr/sbin/kvs_sh1mmer.sh
 }
 
 cryptosmite() {
@@ -211,7 +208,7 @@ while true; do
 	splash
 	echo "Welcome to Sh1mmer legacy."
 	echo "Script date: ${SCRIPT_DATE}"
-	echo "https://github.com/MercuryWorkshop/sh1mmer"
+	echo "https://github.com/Evanlol123/sh1mmer"
 	echo ""
 	echo "Select an option:"
 	echo "(b) Bash shell"
@@ -219,11 +216,12 @@ while true; do
 	echo "(r) Reprovision device"
 	echo "(m) Unblock devmode"
 	echo "(u) Enable USB/altfw boot"
-	echo "(g) Reset GBB flags (in case of an accidental bootloop) WP MUST BE DISABLED"
-	echo "(w) WP disable loop (for pencil method)"
+	echo "(g) Change GBB flags"
+	echo "(w) Disable WP"
 	echo "(h) Touch .developer_mode (skip 5 minute delay)"
 	echo "(v) Remove rootfs verification"
-	echo "(s) Cryptosmite"
+	echo "(k) KVS"
+	echo "(s) CryptoSmite"
 	echo "(t) Call chromeos-tpm-recovery"
 	echo "(f) Continue to factory installer"
 	echo "(i) Tetris"
@@ -240,6 +238,7 @@ while true; do
 	[wW]) run_task wp_disable ;;
 	[hH]) run_task touch_developer_mode ;;
 	[vV]) run_task disable_verity ;;
+	[kK]) run_task kvs ;;
 	[sS]) run_task cryptosmite ;;
 	[tT]) run_task chromeos-tpm-recovery ;;
 	[fF]) run_task factory ;;
