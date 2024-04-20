@@ -5,6 +5,7 @@ echo "Please Enter Target kernver (0-3)"
       case $kernver in
         "0")
           echo "Setting kernver 0"
+          initctl stop trunksd
           tpmc write 0x1008 02  4c 57 52 47  0 0 0 0  0 0 0  e8
           sleep 2
           echo "Finished writing kernver $kernver!"
@@ -13,6 +14,7 @@ echo "Please Enter Target kernver (0-3)"
           ;;
         "1")
           echo "Setting kernver 1"
+          initctl stop trunksd
           tpmc write 0x1008 02  4c 57 52 47  1 0 1 0  0 0 0  55
           echo "Finished writing kernver $kernver!"
           echo "Press ENTER to return to main menu.."
@@ -20,6 +22,7 @@ echo "Please Enter Target kernver (0-3)"
           ;;
         "2")
           echo "Setting kernver 2"
+          initctl stop trunksd
           tpmc write 0x1008 02  4c 57 52 47  2 0 1 0  0 0 0  33
           echo "Finished writing kernver $kernver!"
           echo "Press ENTER to return to main menu.."
@@ -27,6 +30,7 @@ echo "Please Enter Target kernver (0-3)"
           ;;
         "3")
           echo "Setting kernver 3"
+          initctl stop trunksd
           tpmc write 0x1008 02  4c 57 52 47  3 0 1 0  0 0 0  EC
           echo "Finished writing kernver $kernver!"
           echo "Press ENTER to return to main menu.."
