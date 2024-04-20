@@ -99,7 +99,7 @@ enable_usb_boot() {
 
 reset_gbb_flags() {
 	echo "What do you want your GBB flags to be set to?"
- 	echo "0x80b1 is reomended"
+ 	echo "0x80b1 is recomended"
 	read flags
  	wp_disable
  	/usr/share/vboot/bin/set_gbb_flags.sh $flags
