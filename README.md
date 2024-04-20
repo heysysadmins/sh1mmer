@@ -50,7 +50,7 @@ If it's not, good luck. You'll have to try and call up your OEM and demand the f
 Now we can start building. Type out all of these commands in the terminal. You need to be on Linux or WSL2 and have the following packages installed: `git`, `wget`.
 
 ```
-git clone https://github.com/MercuryWorkshop/sh1mmer
+git clone https://github.com/Evanlol123/sh1mmer
 cd sh1mmer/wax
 wget https://dl.osu.bio/api/raw/?path=/SH1mmer/Chromebrew/chromebrew.tar.gz
 sudo bash wax.sh path/to/the/shim/you/downloaded.bin
@@ -77,7 +77,7 @@ This makes it impossible for the Beautiful World GUI to work and thus a legacy C
 Type out all of these commands in the terminal. You need to be on Linux and have the following packages installed: `gdisk`, `e2fsprogs`.
 
 ```
-git clone https://github.com/MercuryWorkshop/sh1mmer
+git clone https://github.com/Evanlol123/sh1mmer
 cd sh1mmer/wax
 sudo bash wax_legacy.sh -i path/to/the/shim/you/downloaded.bin
 ```
