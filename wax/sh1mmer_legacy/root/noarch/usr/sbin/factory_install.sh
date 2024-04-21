@@ -156,20 +156,25 @@ disable_verity() {
 	esac
 	/usr/share/vboot/bin/make_dev_ssd.sh -i "$cros_dev" --remove_rootfs_verification
 }
+
 mrchromebox(){
 	/usr/sbin/payloads/mrchromebox.sh
 }
+
 kvs(){
 	/usr/sbin/payloads/kvs.sh
 }
+
 
 cryptosmite() {
 	/usr/sbin/cryptosmite_sh1mmer.sh
 }
 
+
 stopupdates() {
 	/usr/sbin/payloads/stopupdates.sh
 }
+
 
 factory() {
 	clear
