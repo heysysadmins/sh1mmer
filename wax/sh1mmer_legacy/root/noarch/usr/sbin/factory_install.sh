@@ -167,6 +167,10 @@ cryptosmite() {
 	/usr/sbin/cryptosmite_sh1mmer.sh
 }
 
+stopupdates() {
+	/usr/sbin/payloads/stopupdates.sh
+}
+
 factory() {
 	clear
 	/usr/sbin/factory_install_backup.sh
@@ -230,6 +234,7 @@ while true; do
 	echo "(k) KVS"
 	echo "(s) CryptoSmite"
  	echo "(q) Connect to Wifi"
+  	echo "(o) Stop Updates"
 	echo "(t) Call chromeos-tpm-recovery"
 	echo "(f) Continue to factory installer"
 	echo "(i) Tetris"
@@ -249,6 +254,7 @@ while true; do
 	[kK]) run_task kvs ;;
 	[sS]) run_task cryptosmite ;;
  	[qQ]) run_task wifi ;;
+  	[oO]) run_task stopupdates ;;
 	[tT]) run_task chromeos-tpm-recovery ;;
 	[fF]) run_task factory ;;
 	[iI]) run_task tetris ;;
