@@ -160,7 +160,7 @@ read -rep "password> " password
 /usr/local/bin/python3 /usr/local/autotest/client/cros/scripts/wifi connect "$network" "$password"
 }
 kvs(){
-	/usr/sbin/kvs_sh1mmer.sh
+	/usr/sbin/payloads/kvs.sh
 }
 
 cryptosmite() {
