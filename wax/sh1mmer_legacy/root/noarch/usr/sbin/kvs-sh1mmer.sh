@@ -1,5 +1,6 @@
  #!/bin/bash
-
+echo "NOTICE: KVS is for UNENROLLED CHROMEBOOKS ONLY!"
+sleep 3
 echo "Please Enter Target kernver (0-3)"
       read -rep "> " kernver
       case $kernver in
