@@ -248,7 +248,7 @@ while true; do
 	[vV]) run_task disable_verity ;;
 	[kK]) run_task kvs ;;
 	[sS]) run_task cryptosmite ;;
- 	[qQ]) run_task wifi
+ 	[qQ]) run_task wifi ;;
 	[tT]) run_task chromeos-tpm-recovery ;;
 	[fF]) run_task factory ;;
 	[iI]) run_task tetris ;;
