@@ -97,12 +97,17 @@ enable_usb_boot() {
 	crossystem dev_boot_altfw=1 || :
 }
 
-reset_gbb_flags() {
+set_gbb_flags() {
 	echo "What do you want your GBB flags to be set to?"
  	echo "0x80b1 is recomended"
 	read flags
- 	wp_disable
- 	/usr/share/vboot/bin/set_gbb_flags.sh $flags
+	
+ 	if flashrom --wp-disable; then
+ 		/usr/share/vboot/bin/set_gbb_flags.sh $flags
+  		echo "GBB flags set to $flags."
+   	else
+    		echo "Could not disable software WP
+     	fi
 }
 
 wp_disable() {
@@ -151,13 +156,8 @@ disable_verity() {
 	esac
 	/usr/share/vboot/bin/make_dev_ssd.sh -i "$cros_dev" --remove_rootfs_verification
 }
-wifi(){
-echo "Wings - SH1MMER Wifi Payload"
-echo "Will only work with Open and password-only networks, not EAP networks. Leave password blank for Open networks."
-echo "Made by r58Playz"
-read -rep "network > " network
-read -rep "password> " password
-/usr/local/bin/python3 /usr/local/autotest/client/cros/scripts/wifi connect "$network" "$password"
+mrchromebox(){
+	/usr/sbin/payloads/mrchromebox.sh
 }
 kvs(){
 	/usr/sbin/payloads/kvs.sh
@@ -188,18 +188,18 @@ splash() {
 }
 
 credits() {
-	echo "CREDITS:"
-	echo "CoolElectronics#4683 - Pioneering this wild exploit"
-	echo "ULTRA BLUE#1850 - Testing & discovering how to disable shim rootfs verification"
-	echo "Unciaur#1408 - Found the inital RMA shim"
-	echo "TheMemeSniper#6065 - Testing"
-	echo "Rafflesia#8396 - Hosting files"
-	echo "Bypassi#7037 - Helped with the website"
-	echo "r58Playz#3467 - Helped us set parts of the shim & made the initial GUI script"
-	echo "OlyB#9420 - Scraped additional shims + this legacy script"
-	echo "Sharp_Jack#4374 - Created wax & compiled the first shims"
-	echo "ember#0377 - Helped with the website"
-	echo "Mark - Technical Understanding and Advisory into the ChromeOS ecosystem"
+echo "CREDITS:"
+	echo "@coolelectronics - Pioneering this wild exploit"
+	echo "@ultrablue1850 - Testing & discovering how to disable shim rootfs verification"
+	echo "@unciaur - Found the inital RMA shim"
+	echo "@thememesniper - Testing"
+	echo "@aliceindisarray - Hosting files"
+	echo "@bypassi - Helped with the website"
+	echo "@r58playz - Helped us set parts of the shim & made the initial GUI script"
+	echo "@olyb - Scraped additional shims"
+	echo "@sh4rp.tech - Created wax & compiled the first shims"
+	echo "@ember06666 - Helped with the website"
+	echo "mark@mercurywork.shop - Technical Understanding and Advisory into the ChromeOS ecosystem"
 }
 
 run_task() {
@@ -227,14 +227,14 @@ while true; do
 	echo "(r) Reprovision device"
 	echo "(m) Unblock devmode"
 	echo "(u) Enable USB/altfw boot"
-	echo "(g) Change GBB flags"
+	echo "(g) Edit GBB flags"
 	echo "(w) Disable WP"
 	echo "(h) Touch .developer_mode (skip 5 minute delay)"
 	echo "(v) Remove rootfs verification"
 	echo "(k) KVS"
-	echo "(s) CryptoSmite"
- 	echo "(q) Connect to Wifi"
+	echo "(s) CryptoSmite <v119"
   	echo "(o) Stop Updates"
+   	echo "(p) MrChromebox Firmware Utility Script"
 	echo "(t) Call chromeos-tpm-recovery"
 	echo "(f) Continue to factory installer"
 	echo "(i) Tetris"
@@ -247,14 +247,14 @@ while true; do
 	[rR]) run_task reprovision ;;
 	[mM]) run_task unblock_devmode ;;
 	[uU]) run_task enable_usb_boot ;;
-	[gG]) run_task reset_gbb_flags ;;
+	[gG]) run_task set_gbb_flags ;;
 	[wW]) run_task wp_disable ;;
 	[hH]) run_task touch_developer_mode ;;
 	[vV]) run_task disable_verity ;;
 	[kK]) run_task kvs ;;
 	[sS]) run_task cryptosmite ;;
- 	[qQ]) run_task wifi ;;
   	[oO]) run_task stopupdates ;;
+   	[pP]) run_task mrchromebox ;;
 	[tT]) run_task chromeos-tpm-recovery ;;
 	[fF]) run_task factory ;;
 	[iI]) run_task tetris ;;
