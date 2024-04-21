@@ -37,6 +37,7 @@ echo "Please Enter Target kernver (0-3)"
           echo "Finished writing kernver $kernver!"
           echo "Press ENTER to return to main menu.."
           read -r
+          exit 1
           ;;
         *)
           echo "Invalid kernver. Please check your input."
