@@ -13,6 +13,7 @@ echo "Please Enter Target kernver (0-3)"
           echo "Finished writing kernver $kernver!"
           echo "Press ENTER to return to main menu.."
           read -r
+          exit 1
           ;;
         "1")
           echo "Setting kernver 1"
@@ -21,6 +22,7 @@ echo "Please Enter Target kernver (0-3)"
           echo "Finished writing kernver $kernver!"
           echo "Press ENTER to return to main menu.."
           read -r
+          exit 1
           ;;
         "2")
           echo "Setting kernver 2"
@@ -29,6 +31,7 @@ echo "Please Enter Target kernver (0-3)"
           echo "Finished writing kernver $kernver!"
           echo "Press ENTER to return to main menu.."
           read -r
+          exit 1
           ;;
         "3")
           echo "Setting kernver 3"
@@ -41,5 +44,6 @@ echo "Please Enter Target kernver (0-3)"
           ;;
         *)
           echo "Invalid kernver. Please check your input."
+          exit 1
           ;;
       esac ;;
