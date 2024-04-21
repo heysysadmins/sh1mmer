@@ -151,7 +151,14 @@ disable_verity() {
 	esac
 	/usr/share/vboot/bin/make_dev_ssd.sh -i "$cros_dev" --remove_rootfs_verification
 }
-
+wifi(){
+echo "Wings - SH1MMER Wifi Payload"
+echo "Will only work with Open and password-only networks, not EAP networks. Leave password blank for Open networks."
+echo "Made by r58Playz"
+read -rep "network > " network
+read -rep "password> " password
+/usr/local/bin/python3 /usr/local/autotest/client/cros/scripts/wifi connect "$network" "$password"
+}
 kvs(){
 	/usr/sbin/kvs_sh1mmer.sh
 }
@@ -222,6 +229,7 @@ while true; do
 	echo "(v) Remove rootfs verification"
 	echo "(k) KVS"
 	echo "(s) CryptoSmite"
+ 	echo "(q) Connect to Wifi"
 	echo "(t) Call chromeos-tpm-recovery"
 	echo "(f) Continue to factory installer"
 	echo "(i) Tetris"
@@ -240,6 +248,7 @@ while true; do
 	[vV]) run_task disable_verity ;;
 	[kK]) run_task kvs ;;
 	[sS]) run_task cryptosmite ;;
+ 	[qQ]) run_task wifi
 	[tT]) run_task chromeos-tpm-recovery ;;
 	[fF]) run_task factory ;;
 	[iI]) run_task tetris ;;
