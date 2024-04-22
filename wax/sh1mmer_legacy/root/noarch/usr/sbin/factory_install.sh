@@ -222,20 +222,19 @@ while :; do
 	echo "https://github.com/MercuryWorkshop/sh1mmer"
 	echo ""
 	echo "Select an option:"
-	echo "(p) Payloads"
 	echo "(b) Bash shell"
 	echo "(d) Deprovision device"
 	echo "(r) Reprovision device"
 	echo "(m) Unblock devmode"
 	echo "(u) Enable USB/altfw boot"
 	echo "(g) Edit GBB flags"
-  echo "(w) Disable software WP"
+  	echo "(w) Disable software WP"
 	echo "(h) Touch .developer_mode (skip 5 minute delay)"
 	echo "(v) Remove rootfs verification"
-  echo "(k) KVS"
-  echo "(s) Cryptosmite <v119"
-  echo "(o) Stop updates"
-  echo "(p) MrChromebox's firmware utility script"
+  	echo "(k) KVS"
+  	echo "(s) Cryptosmite <v119"
+ 	echo "(o) Stop updates"
+ 	echo "(p) MrChromebox's firmware utility script"
 	echo "(t) Call chromeos-tpm-recovery"
 	echo "(f) Continue to factory installer"
 	echo "(i) Tetris"
@@ -243,20 +242,19 @@ while :; do
 	echo "(e) Exit and reboot"
 	read -rep "> " choice
 	case "$choice" in
-	[pP]) /usr/sbin/sh1mmer_payload.sh ;;
 	[bB]) run_task bash ;;
 	[dD]) run_task deprovision ;;
 	[rR]) run_task reprovision ;;
 	[mM]) run_task unblock_devmode ;;
 	[uU]) run_task enable_usb_boot ;;
 	[gG]) run_task set_gbb_flags ;;
-  [wW]) run_task wp_disable ;;
+ 	[wW]) run_task wp_disable ;;
 	[hH]) run_task touch_developer_mode ;;
 	[vV]) run_task disable_verity ;;
-  [kK]) run_task kvs ;;
-  [sS]) run_task cryptosmite ;;
-  [oO]) run_task stopupdates ;;
-  [pP]) run_task mrchromebox ;;
+ 	[kK]) run_task kvs ;;
+	[sS]) run_task cryptosmite ;;
+ 	[oO]) run_task stopupdates ;;
+	[pP]) run_task mrchromebox ;;
 	[tT]) run_task chromeos-tpm-recovery ;;
 	[fF]) run_task factory ;;
 	[iI]) run_task tetris ;;
