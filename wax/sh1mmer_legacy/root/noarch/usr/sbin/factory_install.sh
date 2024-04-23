@@ -294,12 +294,6 @@ run_task() {
 	read -res
 }
 
-cros_dev="$(get_largest_cros_blockdev)"
-if [ -z "$cros_dev" ]; then
-	echo "No CrOS SSD found on device!"
-	exit 1
-fi
-
 printf "\033[?25h"
 
 while :; do
