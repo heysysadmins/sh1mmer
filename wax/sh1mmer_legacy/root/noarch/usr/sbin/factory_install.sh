@@ -91,7 +91,53 @@ unblock_devmode() {
 }
 
 kvs(){
-  /usr/sbin/payloads/kvs.sh
+  echo "NOTICE: KVS is for UNENROLLED CHROMEBOOKS ONLY!"
+sleep 3
+echo "Please Enter Target kernver (0-3)"
+      read -rep "> " kernver
+      case $kernver in
+        "0")
+          echo "Setting kernver 0"
+          initctl stop trunksd
+          tpmc write 0x1008 02  4c 57 52 47  0 0 0 0  0 0 0  e8
+          sleep 2
+          echo "Finished writing kernver $kernver!"
+          echo "Press ENTER to return to main menu.."
+          read -r
+          exit 1
+          ;;
+        "1")
+          echo "Setting kernver 1"
+          initctl stop trunksd
+          tpmc write 0x1008 02  4c 57 52 47  1 0 1 0  0 0 0  55
+          echo "Finished writing kernver $kernver!"
+          echo "Press ENTER to return to main menu.."
+          read -r
+          exit 1
+          ;;
+        "2")
+          echo "Setting kernver 2"
+          initctl stop trunksd
+          tpmc write 0x1008 02  4c 57 52 47  2 0 1 0  0 0 0  33
+          echo "Finished writing kernver $kernver!"
+          echo "Press ENTER to return to main menu.."
+          read -r
+          exit 1
+          ;;
+        "3")
+          echo "Setting kernver 3"
+          initctl stop trunksd
+          tpmc write 0x1008 02  4c 57 52 47  3 0 1 0  0 0 0  EC
+          echo "Finished writing kernver $kernver!"
+          echo "Press ENTER to return to main menu.."
+          read -r
+          exit 1
+          ;;
+        *)
+          echo "Invalid kernver. Please check your input."
+          exit 1
+          ;;
+      esac
 }
 
 cryptosmite() {
@@ -99,11 +145,47 @@ cryptosmite() {
 }
 
 stopupdates() {
-  /usr/sbin/payloads/stopupdates.sh
+cros_dev="$(get_largest_cros_blockdev)"
+if [ -z "$cros_dev" ]; then
+	echo "No CrOS SSD found on device!"
+	exit 1
+fi
+echo "IMPORTANT!"
+echo "THIS PAYLOAD WILL STOP YOUR CHROMEBOOK FROM UPDATING"
+echo "IF YOU RECOVER YOUR CHROMEBOOK THESE CHANGES GO AWAY, MAKE SURE TO DO THIS AGAIN"
+echo "Continue? (y/N)"
+read -re action
+case "$action" in
+	[yY]) : ;;
+	*) exit ;;
+esac
+local stateful=$(format_part_number "$cros_dev" 1)
+local stateful_mnt=$(mktemp -d)
+mount "$stateful" "$stateful_mnt"
+mkdir -p "$stateful_mnt"/etc
+printf "CHROMEOS_RELEASE_VERSION=9999.9999.9999.9999\nGOOGLE_RELEASE=9999.9999.9999.9999\n" >"$stateful_mnt"/etc/lsb-release
+umount "$stateful_mnt"
+rmdir "$stateful_mnt"
+echo "Done."
 }
 
 mrchromebox(){
-  /usr/sbin/payloads/mrchromebox.sh
+if [ -f mrchromebox.tar.gz ]; then
+	echo "extracting mrchromebox.tar.gz"
+	mkdir /tmp/mrchromebox
+	tar -xf mrchromebox.tar.gz -C /tmp/mrchromebox
+else
+	echo "mrchromebox.tar.gz not found!" >&2
+	exit 1
+fi
+
+clear
+cd /tmp/mrchromebox
+chmod +x firmware-util.sh
+./firmware-util.sh || :
+
+rm -rf /tmp/mrchromebox
+
 }
 
 enable_usb_boot() {
@@ -211,6 +293,12 @@ run_task() {
 	echo "Press enter to return to the main menu."
 	read -res
 }
+
+cros_dev="$(get_largest_cros_blockdev)"
+if [ -z "$cros_dev" ]; then
+	echo "No CrOS SSD found on device!"
+	exit 1
+fi
 
 printf "\033[?25h"
 
