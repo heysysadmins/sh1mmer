@@ -342,7 +342,8 @@ while :; do
 	[iI]) run_task tetris ;;
 	[cC]) run_task credits ;;
 	[eE]) break ;;
-	*) echo "Invalid option" ;;
+	*) echo "Invalid option" 
+  sleep 2;;
 	esac
 	echo ""
 done
