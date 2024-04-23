@@ -2,7 +2,7 @@
 
 set -eE
 
-SCRIPT_DATE="[2024-04-22]"
+SCRIPT_DATE="[2024-05-22]"
 
 COLOR_RESET="\033[0m"
 COLOR_BLACK_B="\033[1;30m"
@@ -102,41 +102,27 @@ echo "Please Enter Target kernver (0-3)"
           tpmc write 0x1008 02  4c 57 52 47  0 0 0 0  0 0 0  e8
           sleep 2
           echo "Finished writing kernver $kernver!"
-          echo "Press ENTER to return to main menu.."
-          read -r
-          exit 1
           ;;
         "1")
           echo "Setting kernver 1"
           initctl stop trunksd
           tpmc write 0x1008 02  4c 57 52 47  1 0 1 0  0 0 0  55
           echo "Finished writing kernver $kernver!"
-          echo "Press ENTER to return to main menu.."
-          read -r
-          exit 1
           ;;
         "2")
           echo "Setting kernver 2"
           initctl stop trunksd
           tpmc write 0x1008 02  4c 57 52 47  2 0 1 0  0 0 0  33
           echo "Finished writing kernver $kernver!"
-          echo "Press ENTER to return to main menu.."
-          read -r
-          exit 1
           ;;
         "3")
           echo "Setting kernver 3"
           initctl stop trunksd
           tpmc write 0x1008 02  4c 57 52 47  3 0 1 0  0 0 0  EC
           echo "Finished writing kernver $kernver!"
-          echo "Press ENTER to return to main menu.."
-          read -r
-          exit 1
           ;;
         *)
-          echo "Invalid kernver. Please check your input."
-          exit 1
-          ;;
+          echo "Invalid kernver. Please check your input." ;;
       esac
 }
 
@@ -176,7 +162,6 @@ if [ -f mrchromebox.tar.gz ]; then
 	tar -xf mrchromebox.tar.gz -C /tmp/mrchromebox
 else
 	echo "mrchromebox.tar.gz not found!" >&2
-	exit 1
 fi
 
 clear
